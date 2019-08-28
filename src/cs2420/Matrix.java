@@ -58,7 +58,10 @@ public class Matrix {
 		 * return the correct value after determining if this matrix is equal to the
 		 * input matrix
 		 */
-		return false; // placeholder
+//		if(!m.equals(o)) {
+//			return false;// placeholder
+//		}
+		return true;
 	}
 
 	@Override

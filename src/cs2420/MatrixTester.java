@@ -64,8 +64,14 @@ public class MatrixTester {
 		}
 
 		/*
-		 * TODO: fill in more tests that fully exercise all of your methods
+		 * Testing plus
 		 */
+		Matrix m3 = new Matrix(new int[][] {{1, 2}, {1, 1}});
+		Matrix actualSum = m1.plus(m3);
+		Matrix expectedSum = new Matrix(new int[][] {{1, 1}, {1, 1}});
+		if(!expectedSum.equals(actualSum)) {
+			out.println("equals error (m1 + m3 not equal to expected result)");
+		}
 
 		/*
 		 * Finally close the output stream
