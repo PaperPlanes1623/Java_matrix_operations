@@ -20,6 +20,7 @@ public class MatrixTester {
 		 */
 		int[][] d = new int[0][0];
 		boolean caughtRightException = false;
+		@SuppressWarnings("unused")
 		Matrix m;
 		try {
 			m = new Matrix(d);
@@ -62,15 +63,49 @@ public class MatrixTester {
 		if (!expectedProduct.equals(actualProduct)) {
 			out.println("equals error (m1 * m2 not equal to expected result)");
 		}
+		else {
+			out.println("Success: m1 * m2 equal to expected result");
+		}
 
 		/*
 		 * Testing plus
 		 */
-		Matrix m3 = new Matrix(new int[][] {{1, 2}, {1, 1}});
+		Matrix m3 = new Matrix(new int[][] {{1, 2, 3}, {1, 1, 2}});
 		Matrix actualSum = m1.plus(m3);
-		Matrix expectedSum = new Matrix(new int[][] {{1, 1}, {1, 1}});
+		Matrix expectedSum = new Matrix(new int[][] {{2, 4, 6}, {3, 6, 8}});
 		if(!expectedSum.equals(actualSum)) {
 			out.println("equals error (m1 + m3 not equal to expected result)");
+		}
+		else {
+			out.println("Success: m1 + m3 equal to expected result");
+		}
+		
+		/*
+		 * Testing plus illegalArgumentException for invalid dimensions
+		 */
+		Matrix m4 = new Matrix(new int[][] {{1}, {1}});
+		boolean caughtPlusException = true;
+		
+		try {
+			m4.plus(m1);
+		}
+		catch(IllegalArgumentException e) {
+			out.println("Success: Exception Caught when matrices are not same size");
+			caughtPlusException = true;
+		}
+		if(!caughtPlusException) {
+			out.println("Fail: Exception Not Caught When matrices are not same size");
+			caughtPlusException = false;
+		}
+		
+		/*
+		 * Testing equals for invalid dimensions
+		 */
+		if(m4.equals(m3)) {
+			out.println("equals error: m4 and m3 are not equal");
+		}
+		else {
+			out.println("Success: equals is successful");
 		}
 
 		/*

@@ -1,11 +1,14 @@
 package cs2420;
 
+import java.util.Arrays;
+
 /**
  * Represents a 2-d integer matrix as a 2-d int array.
  * 
  * @author Swaroop Joshi
  *
  */
+@SuppressWarnings("unused")
 public class Matrix {
 	/**
 	 * Holds the number of rows of this matrix
@@ -53,14 +56,19 @@ public class Matrix {
 		}
 		Matrix m = (Matrix) o; // if the above was not true, we know it's safe to treat 'o' as a Matrix
 
-		/*
-		 * TODO: replace the below return statement with the correct code, you must
-		 * return the correct value after determining if this matrix is equal to the
-		 * input matrix
-		 */
-//		if(!m.equals(o)) {
-//			return false;// placeholder
-//		}
+		//if dimensions do not match, return false
+		if(this.numRows != m.numRows || this.numColumns != m.numColumns) {
+			return false;
+		}
+		//if data does not match, return false
+		for(int i=0; i<this.numRows; i++) {
+			for(int j=0; j<this.numColumns; j++) {
+				if(this.data[i][j] != m.data[i][j]) {
+					return false;
+				}
+			}
+		}
+		//return true otherwise
 		return true;
 	}
 
@@ -93,10 +101,26 @@ public class Matrix {
 	 *                                  compatible
 	 */
 	public Matrix times(Matrix m) throws IllegalArgumentException {
-		/*
-		 * TODO: implement the method to match the description
-		 */
-		return null; // placeholder; don't use explicit nulls otherwise
+		
+		if(this.numColumns != m.numRows) {
+			throw new IllegalArgumentException("Not Valid Multiplication Matrix");
+		}
+		
+		Matrix resultMatrix = new Matrix(new int[this.numRows][m.numColumns]);
+		int temp = 0;
+		
+		for(int i=0; i<this.numRows; i++) {
+			for(int j=0; j<this.numColumns; j++) {
+				//add entries of i row in first matrix and j column of second matrix
+				for(int k=0; k< this.numColumns; k++) {
+					temp += this.data[i][k] * m.data[k][j];
+				}
+				//assign temp holder to entry in matrix
+				resultMatrix.data[i][j] = temp;
+				temp = 0;
+			}
+		}
+		return resultMatrix; // placeholder; don't use explicit nulls otherwise
 	}
 
 	/**
@@ -111,10 +135,19 @@ public class Matrix {
 	 *                                  compatible
 	 */
 	public Matrix plus(Matrix m) throws IllegalArgumentException {
+		Matrix resultMatrix = new Matrix(new int[this.numRows][this.numColumns]);
 		
-		if(m == null) {
-			throw new IllegalArgumentException("m cannot be null");
+		if(!resultMatrix.equals(m)) {
+			throw new IllegalArgumentException("matrices must be same size");
 		}
-		return null; // placeholder; don't use explicit nulls otherwise
+		
+		for(int i=0; i<numRows; i++) {
+			for(int j=0; j<numColumns; j++) {
+				 resultMatrix.data[i][j] = this.data[i][j] + m.data[i][j];
+			}
+		}
+		
+	return resultMatrix;
+		
 	}
 }
